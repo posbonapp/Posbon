@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(supabase --help)",
+      "Bash(supabase db *)",
+      "Bash(flutter analyze *)",
+      "Bash(supabase --version)",
+      "Bash(supabase functions *)"
+    ]
+  }
+}
