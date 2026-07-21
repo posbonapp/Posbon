@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../main.dart';
 import '../l10n/app_localizations.dart';
+import '../locale_provider.dart';
+import '../i18n_text.dart';
 import 'worker_report_screen.dart';
 import 'admin_tasks_screen.dart'
     show kAccent, kAccentSoft, kAmber, kAmberSoft, kRed, kRedSoft, kBlue, kBlueSoft, kLine;
@@ -133,7 +135,9 @@ class _WorkerTasksScreenState extends State<WorkerTasksScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(r['title'] ?? '',
+                Text(
+                    pickTranslated(r['title_i18n'], r['title'] ?? '',
+                        localeProvider.effectiveCode),
                     style: const TextStyle(
                         fontSize: 14.5, fontWeight: FontWeight.w600)),
                 const SizedBox(height: 4),
@@ -240,7 +244,9 @@ class _WorkerTasksScreenState extends State<WorkerTasksScreen> {
                 ],
                 const SizedBox(width: 10),
                 Expanded(
-                  child: Text(task['title'] ?? '',
+                  child: Text(
+                      pickTranslated(task['title_i18n'], task['title'] ?? '',
+                          localeProvider.effectiveCode),
                       style: const TextStyle(
                           fontSize: 15.5, fontWeight: FontWeight.w600)),
                 ),
@@ -327,9 +333,14 @@ class _DoTaskScreenState extends State<DoTaskScreen> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
     final apt = widget.task['apartments']?['number'];
+    final locale = localeProvider.effectiveCode;
+    final title = pickTranslated(
+        widget.task['title_i18n'], widget.task['title'] ?? '', locale);
+    final description = pickTranslated(widget.task['description_i18n'],
+        widget.task['description'] ?? '', locale);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.task['title'] ?? ''),
+        title: Text(title),
         backgroundColor: Colors.transparent,
       ),
       body: SingleChildScrollView(
@@ -353,12 +364,12 @@ class _DoTaskScreenState extends State<DoTaskScreen> {
                           color: kAccent,
                           fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-                  Text(widget.task['title'] ?? '',
+                  Text(title,
                       style: const TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold)),
-                  if ((widget.task['description'] ?? '').isNotEmpty) ...[
+                  if (description.isNotEmpty) ...[
                     const SizedBox(height: 8),
-                    Text(widget.task['description'],
+                    Text(description,
                         style: const TextStyle(color: Colors.grey)),
                   ],
                 ],

@@ -96,6 +96,8 @@
   "createTaskFromRequest": "Créer une tâche",
   "closeRequest": "Fermer la demande",
   "requestDetails": "Demande",
+  "showOriginal": "Afficher l'original",
+  "showTranslation": "Afficher la traduction",
   "linkedTask": "Tâche liée",
   "rating": "Évaluation",
   "parking": "Parking",

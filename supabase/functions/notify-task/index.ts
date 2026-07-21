@@ -1,5 +1,11 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 import { sendLocalizedPush } from "../_shared/notify.ts"
+import { Locale, pickI18nField } from "../_shared/i18n.ts"
+
+function titleParams(record: any) {
+  const fallback = String(record.title ?? '')
+  return (locale: Locale) => ({ title: pickI18nField(record.title_i18n, locale, fallback) })
+}
 
 Deno.serve(async (req) => {
   try {
@@ -18,18 +24,25 @@ Deno.serve(async (req) => {
 
     // Новая задача назначена исполнителю
     if (!oldRecord && assignee) {
-      const result = await sendLocalizedPush(admin, [assignee], 'task_new', {
-        title: String(record.title ?? ''),
-        urgent: record.is_urgent ? '1' : '0',
-      })
+      const result = await sendLocalizedPush(
+        admin,
+        [assignee],
+        'task_new',
+        { title: String(record.title ?? ''), urgent: record.is_urgent ? '1' : '0' },
+        titleParams(record)
+      )
       return new Response(JSON.stringify({ ok: true, ...result }))
     }
 
     // Задачу вернули на переделку
     if (oldRecord && oldRecord.status !== 'redo' && record.status === 'redo' && assignee) {
-      const result = await sendLocalizedPush(admin, [assignee], 'task_redo', {
-        title: String(record.title ?? ''),
-      })
+      const result = await sendLocalizedPush(
+        admin,
+        [assignee],
+        'task_redo',
+        { title: String(record.title ?? '') },
+        titleParams(record)
+      )
       return new Response(JSON.stringify({ ok: true, ...result }))
     }
 
@@ -41,9 +54,13 @@ Deno.serve(async (req) => {
         .eq('id', record.apartment_id)
         .maybeSingle()
       if (apt?.tenant_id) {
-        const result = await sendLocalizedPush(admin, [apt.tenant_id], 'task_done', {
-          title: String(record.title ?? ''),
-        })
+        const result = await sendLocalizedPush(
+          admin,
+          [apt.tenant_id],
+          'task_done',
+          { title: String(record.title ?? '') },
+          titleParams(record)
+        )
         return new Response(JSON.stringify({ ok: true, ...result }))
       }
     }

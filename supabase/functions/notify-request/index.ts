@@ -1,5 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 import { sendLocalizedPush } from "../_shared/notify.ts"
+import { Locale, pickI18nField } from "../_shared/i18n.ts"
 
 Deno.serve(async (req) => {
   try {
@@ -40,10 +41,22 @@ Deno.serve(async (req) => {
       if (apt) apartment = String(apt.number ?? '')
     }
 
-    const result = await sendLocalizedPush(admin, staffIds, 'request_new', {
-      title: String(record.title ?? record.description ?? '').slice(0, 120),
-      apartment,
-    })
+    // Fallback for locales translate-request hasn't produced yet (e.g. it
+    // hasn't run for this insert as of this webhook firing) — original text.
+    const fallbackTitle = String(record.title ?? record.description ?? '').slice(0, 120)
+
+    const result = await sendLocalizedPush(
+      admin,
+      staffIds,
+      'request_new',
+      { title: fallbackTitle, apartment },
+      (locale: Locale) => {
+        const translated =
+          pickI18nField(record.title_i18n, locale, '') ||
+          pickI18nField(record.description_i18n, locale, '')
+        return translated ? { title: translated.slice(0, 120) } : {}
+      }
+    )
 
     return new Response(JSON.stringify({ ok: true, ...result }))
   } catch (e) {

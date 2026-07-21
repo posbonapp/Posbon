@@ -300,6 +300,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get requestDetails => 'Заявка';
 
   @override
+  String get showOriginal => 'Показать оригинал';
+
+  @override
+  String get showTranslation => 'Показать перевод';
+
+  @override
   String get linkedTask => 'Связанная задача';
 
   @override

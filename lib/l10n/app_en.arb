@@ -96,6 +96,8 @@
   "createTaskFromRequest": "Create task",
   "closeRequest": "Close request",
   "requestDetails": "Request",
+  "showOriginal": "Show original",
+  "showTranslation": "Show translation",
   "linkedTask": "Linked task",
   "rating": "Rating",
   "parking": "Parking",

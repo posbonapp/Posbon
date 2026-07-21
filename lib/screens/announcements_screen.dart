@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../main.dart';
 import '../l10n/app_localizations.dart';
+import '../locale_provider.dart';
+import '../i18n_text.dart';
 import 'admin_tasks_screen.dart' show kAccent, kLine;
 
 class AnnouncementsScreen extends StatefulWidget {
@@ -66,6 +68,9 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
           itemCount: rows.length,
           itemBuilder: (context, i) {
             final a = rows[i];
+            final locale = localeProvider.effectiveCode;
+            final title = pickTranslated(a['title_i18n'], a['title'] ?? '', locale);
+            final body = pickTranslated(a['body_i18n'], a['body'] ?? '', locale);
             return Container(
               margin: const EdgeInsets.only(bottom: 12),
               padding: const EdgeInsets.all(17),
@@ -104,14 +109,14 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  Text(a['title'] ?? '',
+                  Text(title,
                       style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Color(0xFFEAF0EE))),
-                  if ((a['body'] ?? '').isNotEmpty) ...[
+                  if (body.isNotEmpty) ...[
                     const SizedBox(height: 6),
-                    Text(a['body'],
+                    Text(body,
                         style: const TextStyle(
                             fontSize: 13,
                             height: 1.5,

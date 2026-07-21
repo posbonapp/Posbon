@@ -7,6 +7,18 @@ export function normalizeLocale(value: unknown): Locale {
   return DEFAULT_LOCALE
 }
 
+/// Picks the translated string for `locale` out of a jsonb
+/// `{"ru": "...", "en": "...", "fr": "..."}` column (e.g. requests.title_i18n),
+/// falling back when there's no translation yet (row not processed by
+/// translate-request, or field was empty).
+export function pickI18nField(i18n: unknown, locale: Locale, fallback: string): string {
+  if (i18n && typeof i18n === 'object' && !Array.isArray(i18n)) {
+    const value = (i18n as Record<string, unknown>)[locale]
+    if (typeof value === 'string' && value) return value
+  }
+  return fallback
+}
+
 type MessageBuilder = (params: Record<string, string>) => { title: string; body: string }
 
 const MESSAGES: Record<string, Record<Locale, MessageBuilder>> = {

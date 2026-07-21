@@ -5,7 +5,17 @@
       "Bash(supabase db *)",
       "Bash(flutter analyze *)",
       "Bash(supabase --version)",
-      "Bash(supabase functions *)"
+      "Bash(supabase functions *)",
+      "Bash(flutter gen-l10n *)",
+      "Bash(deno --version)",
+      "Bash(npm --version)",
+      "Bash(supabase projects *)",
+      "Bash(flutter run *)",
+      "Read(//c/Users/Nistell/.config/**)",
+      "Read(//c/Users/Nistell/.config/supabase/**)",
+      "Bash(curl -s 'https://hyrvruxwdbhtkdthjsbr.supabase.co/rest/v1/tasks?title=eq.Fix%20the%20elevator%20door&select=id,title,title_i18n,description_i18n,original_locale,created_at' -H 'apikey: __CMDSUB_OUTPUT__' -H 'Authorization: Bearer __CMDSUB_OUTPUT__')",
+      "Bash(curl -s 'https://hyrvruxwdbhtkdthjsbr.supabase.co/rest/v1/announcements?title=eq.Water%20shutoff%20tomorrow&select=id,title,title_i18n,body_i18n,original_locale' -H 'apikey: __CMDSUB_OUTPUT__' -H 'Authorization: Bearer __CMDSUB_OUTPUT__')",
+      "Bash(curl -s -X POST https://hyrvruxwdbhtkdthjsbr.supabase.co/functions/v1/translate-task -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5cnZydXh3ZGJodGtkdGhqc2JyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNjExNTAsImV4cCI6MjA5OTYzNzE1MH0.Rz04mnp1Oqc7qgPm76EtT1DqYh2h2XTCBf_hKvT6aEk' -H 'Content-Type: application/json' -d '{\"record\":{\"id\":\"00000000-0000-0000-0000-000000000000\",\"title\":\"Test task\",\"description\":\"Test description\",\"building_id\":\"00000000-0000-0000-0000-000000000000\"}}')"
     ]
   }
 }

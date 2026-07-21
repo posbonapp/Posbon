@@ -4,7 +4,10 @@ export async function sendLocalizedPush(
   admin: any,
   userIds: string[],
   messageKey: 'task_new' | 'task_redo' | 'task_done' | 'request_new' | 'announcement_new',
-  params: Record<string, string>
+  params: Record<string, string>,
+  // Optional per-locale override, e.g. picking an already-translated title
+  // out of a jsonb i18n column instead of a single fixed string for everyone.
+  localeParams?: (locale: Locale) => Record<string, string>
 ): Promise<{ sent: number; groups: number }> {
   const ids = [...new Set(userIds)].filter(Boolean)
   if (ids.length === 0) return { sent: 0, groups: 0 }
@@ -38,7 +41,8 @@ export async function sendLocalizedPush(
   let sent = 0
   for (const [locale, tokens] of tokensByLocale) {
     if (tokens.length === 0) continue
-    const { title, body } = localize(messageKey, locale, params)
+    const mergedParams = { ...params, ...(localeParams ? localeParams(locale) : {}) }
+    const { title, body } = localize(messageKey, locale, mergedParams)
     const res = await fetch(`${supabaseUrl}/functions/v1/send-push`, {
       method: 'POST',
       headers: {

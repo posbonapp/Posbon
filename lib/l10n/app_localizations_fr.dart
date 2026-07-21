@@ -300,6 +300,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get requestDetails => 'Demande';
 
   @override
+  String get showOriginal => 'Afficher l\'original';
+
+  @override
+  String get showTranslation => 'Afficher la traduction';
+
+  @override
   String get linkedTask => 'Tâche liée';
 
   @override

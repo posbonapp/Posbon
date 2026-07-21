@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import '../main.dart';
 import '../l10n/app_localizations.dart';
 import '../icons.dart';
+import '../locale_provider.dart';
+import '../i18n_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'admin_tasks_screen.dart'
     show kAccent, kAccentSoft, kAmber, kAmberSoft, kBlue, kBlueSoft, kLine, NewTaskScreen;
@@ -111,7 +113,9 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
                         ),
                         const SizedBox(width: 10),
                         Expanded(
-                          child: Text(r['title'] ?? '',
+                          child: Text(
+                              pickTranslated(r['title_i18n'], r['title'] ?? '',
+                                  localeProvider.effectiveCode),
                               style: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w600)),
@@ -182,6 +186,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
   List<Map<String, dynamic>> history = [];
   bool loading = true;
   String? contractorName;
+  bool showOriginal = false;
 
   @override
   void initState() {
@@ -298,6 +303,18 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
     final apt = widget.request['apartments']?['number'];
+    final viewerLocale = localeProvider.effectiveCode;
+    final originalLocale = widget.request['original_locale'] as String?;
+    final canToggle = hasTranslationFor(originalLocale, viewerLocale);
+    final useOriginal = showOriginal || !canToggle;
+    final String title = useOriginal
+        ? (widget.request['title'] ?? '') as String
+        : pickTranslated(widget.request['title_i18n'],
+            widget.request['title'] ?? '', viewerLocale);
+    final String description = useOriginal
+        ? (widget.request['description'] ?? '') as String
+        : pickTranslated(widget.request['description_i18n'],
+            widget.request['description'] ?? '', viewerLocale);
     return Scaffold(
       appBar: AppBar(
         title: Text('${t.requestDetails} · ${t.apartment} $apt'),
@@ -308,13 +325,21 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
           : ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          Text(widget.request['title'] ?? '',
+          Text(title,
               style: const TextStyle(
                   fontSize: 20, fontWeight: FontWeight.bold)),
-          if ((widget.request['description'] ?? '').isNotEmpty) ...[
+          if (description.isNotEmpty) ...[
             const SizedBox(height: 8),
-            Text(widget.request['description'],
+            Text(description,
                 style: const TextStyle(color: Colors.grey)),
+          ],
+          if (canToggle) ...[
+            const SizedBox(height: 8),
+            TextButton.icon(
+              onPressed: () => setState(() => showOriginal = !showOriginal),
+              icon: const Icon(Icons.translate, size: 18),
+              label: Text(showOriginal ? t.showTranslation : t.showOriginal),
+            ),
           ],
           if (photoUrl != null) ...[
             const SizedBox(height: 16),

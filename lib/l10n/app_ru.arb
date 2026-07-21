@@ -96,6 +96,8 @@
   "createTaskFromRequest": "Создать задачу",
   "closeRequest": "Закрыть заявку",
   "requestDetails": "Заявка",
+  "showOriginal": "Показать оригинал",
+  "showTranslation": "Показать перевод",
   "linkedTask": "Связанная задача",
   "rating": "Оценка",
   "parking": "Парковка",

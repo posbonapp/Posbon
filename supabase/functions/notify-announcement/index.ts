@@ -1,5 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 import { sendLocalizedPush } from "../_shared/notify.ts"
+import { Locale, pickI18nField } from "../_shared/i18n.ts"
 
 Deno.serve(async (req) => {
   try {
@@ -29,10 +30,19 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ ok: true, skipped: 'no recipients' }))
     }
 
-    const result = await sendLocalizedPush(admin, ids, 'announcement_new', {
-      title: String(record.title ?? ''),
-      body: String(record.body ?? '').slice(0, 120),
-    })
+    const fallbackTitle = String(record.title ?? '')
+    const fallbackBody = String(record.body ?? '').slice(0, 120)
+
+    const result = await sendLocalizedPush(
+      admin,
+      ids,
+      'announcement_new',
+      { title: fallbackTitle, body: fallbackBody },
+      (locale: Locale) => ({
+        title: pickI18nField(record.title_i18n, locale, fallbackTitle),
+        body: pickI18nField(record.body_i18n, locale, fallbackBody).slice(0, 120),
+      })
+    )
 
     return new Response(JSON.stringify({ ok: true, ...result }))
   } catch (e) {

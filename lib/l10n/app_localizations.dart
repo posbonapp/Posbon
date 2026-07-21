@@ -682,6 +682,18 @@ abstract class AppLocalizations {
   /// **'Request'**
   String get requestDetails;
 
+  /// No description provided for @showOriginal.
+  ///
+  /// In en, this message translates to:
+  /// **'Show original'**
+  String get showOriginal;
+
+  /// No description provided for @showTranslation.
+  ///
+  /// In en, this message translates to:
+  /// **'Show translation'**
+  String get showTranslation;
+
   /// No description provided for @linkedTask.
   ///
   /// In en, this message translates to:

@@ -6,6 +6,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../main.dart';
 import '../l10n/app_localizations.dart';
 import '../icons.dart';
+import '../locale_provider.dart';
+import '../i18n_text.dart';
 import 'settings_screen.dart';
 import 'admin_tasks_screen.dart'
     show kAccent, kAccentSoft, kAmber, kAmberSoft, kBlue, kBlueSoft, kLine;
@@ -204,7 +206,9 @@ class _TenantHomeScreenState extends State<TenantHomeScreen> {
           Row(
             children: [
               Expanded(
-                child: Text(r['title'] ?? '',
+                child: Text(
+                    pickTranslated(r['title_i18n'], r['title'] ?? '',
+                        localeProvider.effectiveCode),
                     style: const TextStyle(
                         fontSize: 15, fontWeight: FontWeight.w600)),
               ),

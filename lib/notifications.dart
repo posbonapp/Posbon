@@ -89,17 +89,24 @@ class Notifications {
     messaging.onTokenRefresh.listen((t) => _saveToken(t));
   }
 
-  /// Saves the current device token for the logged in user.
-  /// Safe to call many times.
+  /// Saves the current device token (if any) and the current locale for the
+  /// logged in user. Safe to call many times. Locale sync must not depend on
+  /// getToken() succeeding — no push permission / iOS simulator / no Play
+  /// Services all leave token null, and language sync still has to go through.
   static Future<void> syncToken() async {
-    final token = await FirebaseMessaging.instance.getToken();
-    if (token != null) await _saveToken(token);
+    String? token;
+    try {
+      token = await FirebaseMessaging.instance.getToken();
+    } catch (e) {
+      debugPrint('PUSH: getToken failed -> $e');
+    }
+    await _saveToken(token);
   }
 
-  static Future<void> _saveToken(String token) async {
+  static Future<void> _saveToken(String? token) async {
     final user = supabase.auth.currentUser;
     if (user == null) {
-      debugPrint('PUSH: no user yet, token not saved');
+      debugPrint('PUSH: no user yet, token/locale not saved');
       return;
     }
     try {
@@ -107,7 +114,7 @@ class Notifications {
         'p_token': token,
         'p_locale': localeProvider.effectiveCode,
       });
-      debugPrint('PUSH: token saved for ${user.id}');
+      debugPrint('PUSH: synced for ${user.id} (token: ${token != null})');
     } catch (e) {
       debugPrint('PUSH: save failed -> $e');
     }

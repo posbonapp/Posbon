@@ -300,6 +300,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get requestDetails => 'Request';
 
   @override
+  String get showOriginal => 'Show original';
+
+  @override
+  String get showTranslation => 'Show translation';
+
+  @override
   String get linkedTask => 'Linked task';
 
   @override

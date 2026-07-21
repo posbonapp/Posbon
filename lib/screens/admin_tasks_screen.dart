@@ -3,6 +3,8 @@ import '../main.dart';
 import '../l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import '../icons.dart';
+import '../locale_provider.dart';
+import '../i18n_text.dart';
 
 const kAccent = Color(0xFF2F7D6B);
 const kAccentSoft = Color(0xFFE6F0EC);
@@ -206,7 +208,9 @@ class _AdminTasksScreenState extends State<AdminTasksScreen> {
                       ],
                       const SizedBox(width: 10),
                       Expanded(
-                        child: Text(task['title'] ?? '',
+                        child: Text(
+                            pickTranslated(task['title_i18n'],
+                                task['title'] ?? '', localeProvider.effectiveCode),
                             style: const TextStyle(
                                 fontSize: 15.5,
                                 fontWeight: FontWeight.w600)),
@@ -584,7 +588,9 @@ class _ReviewTaskScreenState extends State<ReviewTaskScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(widget.task['title'] ?? '',
+            Text(
+                pickTranslated(widget.task['title_i18n'],
+                    widget.task['title'] ?? '', localeProvider.effectiveCode),
                 style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             const SizedBox(height: 16),
             if (photoUrl != null)
