@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
 import '../l10n/app_localizations.dart';
-import 'admin_tasks_screen.dart' show kAccent, kAccentSoft, kLine;
+import '../theme.dart';
+import 'admin_tasks_screen.dart' show kAccent, kAccentSoft;
 
 class PeopleScreen extends StatefulWidget {
   const PeopleScreen({super.key});
@@ -40,23 +41,23 @@ class _PeopleScreenState extends State<PeopleScreen> {
         padding: const EdgeInsets.all(16),
         children: [
           Text(t.workers,
-              style: const TextStyle(
+              style: TextStyle(
                   fontSize: 11,
                   letterSpacing: .7,
                   fontWeight: FontWeight.bold,
-                  color: Colors.grey)),
+                  color: palette(context).muted)),
           const SizedBox(height: 9),
           if (workers.isEmpty)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Text('—', style: TextStyle(color: Colors.grey)),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Text('—', style: TextStyle(color: palette(context).muted)),
             ),
           ...workers.map((w) => Container(
             margin: const EdgeInsets.only(bottom: 11),
             padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: kLine),
+              color: palette(context).card,
+              border: Border.all(color: palette(context).line),
               borderRadius: BorderRadius.circular(18),
             ),
             child: Row(

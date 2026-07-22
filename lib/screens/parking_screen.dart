@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
 import '../l10n/app_localizations.dart';
+import '../theme.dart';
 import 'admin_tasks_screen.dart'
-    show kAccent, kAccentSoft, kAmber, kAmberSoft, kLine;
+    show kAccent, kAccentSoft, kAmber, kAmberSoft;
 
 class ParkingScreen extends StatefulWidget {
   const ParkingScreen({super.key});
@@ -168,10 +169,10 @@ class _ParkingScreenState extends State<ParkingScreen> {
           ),
           const SizedBox(width: 6),
           Text(text,
-              style: const TextStyle(
+              style: TextStyle(
                   fontSize: 11.5,
                   fontWeight: FontWeight.w600,
-                  color: Colors.grey)),
+                  color: palette(context).muted)),
         ],
       );
 
@@ -180,7 +181,7 @@ class _ParkingScreenState extends State<ParkingScreen> {
     final status = spot['status'] as String;
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: palette(context).card,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -217,8 +218,8 @@ class _ParkingScreenState extends State<ParkingScreen> {
               ),
             if (status != 'free')
               ListTile(
-                leading: const Icon(Icons.check_circle_outline,
-                    color: Colors.grey),
+                leading: Icon(Icons.check_circle_outline,
+                    color: palette(context).muted),
                 title: Text(t.release),
                 onTap: () {
                   Navigator.pop(context);

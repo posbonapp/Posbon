@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../main.dart';
 import '../l10n/app_localizations.dart';
-import 'admin_tasks_screen.dart' show kAccent, kLine;
+import 'admin_tasks_screen.dart' show kAccent;
 
 class WorkerReportScreen extends StatefulWidget {
   final Map<String, dynamic>? request;

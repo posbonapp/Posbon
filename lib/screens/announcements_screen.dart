@@ -4,7 +4,8 @@ import '../main.dart';
 import '../l10n/app_localizations.dart';
 import '../locale_provider.dart';
 import '../i18n_text.dart';
-import 'admin_tasks_screen.dart' show kAccent, kLine;
+import '../theme.dart';
+import 'admin_tasks_screen.dart' show kAccent;
 
 class AnnouncementsScreen extends StatefulWidget {
   final bool isAdmin;
@@ -60,7 +61,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
           : rows.isEmpty
           ? Center(
           child: Text(t.noAnnouncements,
-              style: const TextStyle(color: Colors.grey)))
+              style: TextStyle(color: palette(context).muted)))
           : RefreshIndicator(
         onRefresh: load,
         child: ListView.builder(

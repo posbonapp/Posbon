@@ -5,7 +5,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../l10n/app_localizations.dart';
-import 'admin_tasks_screen.dart' show kAccent, kAccentSoft, kLine;
+import 'admin_tasks_screen.dart' show kAccent, kAccentSoft;
 
 class TenantCardScreen extends StatelessWidget {
   final String apartmentNumber;

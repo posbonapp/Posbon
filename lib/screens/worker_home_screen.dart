@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../main.dart';
 import '../l10n/app_localizations.dart';
 import '../notifications.dart';
+import '../theme.dart';
 import 'worker_tasks_screen.dart';
 import 'worker_report_screen.dart';
 import 'purchase_screen.dart';
@@ -74,7 +75,7 @@ class _WorkerHomeScreenState extends State<WorkerHomeScreen> {
             Text(titles[index], style: const TextStyle(fontSize: 18)),
             if (myName != null && index == 0)
               Text(myName!,
-                  style: const TextStyle(fontSize: 11.5, color: Colors.grey)),
+                  style: TextStyle(fontSize: 11.5, color: palette(context).muted)),
           ],
         ),
         backgroundColor: Colors.transparent,

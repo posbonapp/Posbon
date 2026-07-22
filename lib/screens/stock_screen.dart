@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import '../main.dart';
 import '../l10n/app_localizations.dart';
 import '../icons.dart';
+import '../theme.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'admin_tasks_screen.dart'
-    show kAccent, kAccentSoft, kAmber, kAmberSoft, kRed, kLine;
+    show kAccent, kAccentSoft, kAmber, kAmberSoft, kRed;
 
 String unitLabel(AppLocalizations t, String? unit) => switch (unit) {
   'box' => t.unitBox,
@@ -86,7 +87,7 @@ class _StockScreenState extends State<StockScreen> {
           : rows.isEmpty
           ? Center(
           child: Text(t.noItems,
-              style: const TextStyle(color: Colors.grey)))
+              style: TextStyle(color: palette(context).muted)))
           : RefreshIndicator(
         onRefresh: load,
         child: ListView.builder(
@@ -109,8 +110,8 @@ class _StockScreenState extends State<StockScreen> {
                 margin: const EdgeInsets.only(bottom: 11),
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: kLine),
+                  color: palette(context).card,
+                  border: Border.all(color: palette(context).line),
                   borderRadius: BorderRadius.circular(18),
                 ),
                 child: Column(
@@ -140,8 +141,8 @@ class _StockScreenState extends State<StockScreen> {
                               const SizedBox(height: 3),
                               Text(
                                 '${t.inStock} $avail ${unitLabel(t, item['unit'])} · ${t.reserved} $res · ${t.installed} $inst',
-                                style: const TextStyle(
-                                    fontSize: 12, color: Colors.grey),
+                                style: TextStyle(
+                                    fontSize: 12, color: palette(context).muted),
                               ),
                             ],
                           ),
@@ -168,7 +169,7 @@ class _StockScreenState extends State<StockScreen> {
                       child: LinearProgressIndicator(
                         value: pct,
                         minHeight: 7,
-                        backgroundColor: kLine,
+                        backgroundColor: palette(context).line,
                         color: low ? kAmber : kAccent,
                       ),
                     ),
@@ -204,7 +205,7 @@ class _StockScreenState extends State<StockScreen> {
 
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: palette(context).card,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
@@ -393,7 +394,7 @@ class _AddStockDialogState extends State<AddStockDialog> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text('${t.inStock}: $current',
-              style: const TextStyle(fontSize: 13, color: Colors.grey)),
+              style: TextStyle(fontSize: 13, color: palette(context).muted)),
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -523,9 +524,9 @@ class _NewItemScreenState extends State<NewItemScreen> {
           vertical: 8,
         ),
         decoration: BoxDecoration(
-          color: selected ? kAccent : Colors.white,
+          color: selected ? kAccent : palette(context).card,
           border: Border.all(
-            color: selected ? kAccent : kLine,
+            color: selected ? kAccent : palette(context).line,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -536,7 +537,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
             fontWeight: FontWeight.w600,
             color: selected
                 ? Colors.white
-                : Colors.grey.shade600,
+                : palette(context).muted,
           ),
         ),
       ),
@@ -620,9 +621,9 @@ class _NewItemScreenState extends State<NewItemScreen> {
                             width: 52,
                             height: 52,
                             decoration: BoxDecoration(
-                              color: selected ? kAccent : Colors.white,
+                              color: selected ? kAccent : palette(context).card,
                               border: Border.all(
-                                color: selected ? kAccent : kLine,
+                                color: selected ? kAccent : palette(context).line,
                               ),
                               borderRadius: BorderRadius.circular(14),
                             ),
@@ -630,7 +631,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
                               e.value,
                               color: selected
                                   ? Colors.white
-                                  : Colors.grey.shade600,
+                                  : palette(context).muted,
                             ),
                           ),
                         );
@@ -645,21 +646,21 @@ class _NewItemScreenState extends State<NewItemScreen> {
                     child: IgnorePointer(
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 5),
-                        color: Colors.white,
+                        color: Theme.of(context).scaffoldBackgroundColor,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
                               Icons.keyboard_arrow_down,
                               size: 18,
-                              color: Colors.grey.shade500,
+                              color: palette(context).muted,
                             ),
                             const SizedBox(width: 4),
                             Text(
                               t.scrollForMore,
                               style: TextStyle(
                                 fontSize: 11,
-                                color: Colors.grey.shade500,
+                                color: palette(context).muted,
                               ),
                             ),
                           ],
@@ -707,9 +708,9 @@ class _NewItemScreenState extends State<NewItemScreen> {
                         style: const TextStyle(fontWeight: FontWeight.w600))),
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: kLine),
+                    border: Border.all(color: palette(context).line),
                     borderRadius: BorderRadius.circular(12),
-                    color: Colors.white,
+                    color: palette(context).card,
                   ),
                   child: Row(
                     children: [
@@ -817,17 +818,17 @@ class _WriteOffDialogState extends State<WriteOffDialog> {
         children: [
           Text(
             t.writeOffHint,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 13,
-              color: Colors.grey,
+              color: palette(context).muted,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             '${t.inStock}: ${widget.current}',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 12,
-              color: Colors.grey,
+              color: palette(context).muted,
             ),
           ),
           const SizedBox(height: 12),

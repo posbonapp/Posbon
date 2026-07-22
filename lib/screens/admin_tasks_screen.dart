@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../icons.dart';
 import '../locale_provider.dart';
 import '../i18n_text.dart';
+import '../theme.dart';
 
 const kAccent = Color(0xFF2F7D6B);
 const kAccentSoft = Color(0xFFE6F0EC);
@@ -102,7 +103,7 @@ class _AdminTasksScreenState extends State<AdminTasksScreen> {
     final t = AppLocalizations.of(context)!;
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: palette(context).card,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -162,7 +163,7 @@ class _AdminTasksScreenState extends State<AdminTasksScreen> {
           : tasks.isEmpty
           ? Center(
           child: Text(t.noTasks,
-              style: const TextStyle(color: Colors.grey)))
+              style: TextStyle(color: palette(context).muted)))
           : RefreshIndicator(
         onRefresh: load,
         child: ListView.builder(
@@ -187,8 +188,8 @@ class _AdminTasksScreenState extends State<AdminTasksScreen> {
                 margin: const EdgeInsets.only(bottom: 11),
                 padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: kLine),
+                color: palette(context).card,
+                border: Border.all(color: palette(context).line),
                 borderRadius: BorderRadius.circular(18),
               ),
               child: Column(
@@ -224,7 +225,7 @@ class _AdminTasksScreenState extends State<AdminTasksScreen> {
                         child: IconButton(
                           padding: EdgeInsets.zero,
                           iconSize: 18,
-                          icon: const Icon(Icons.more_vert, color: Colors.grey),
+                          icon: Icon(Icons.more_vert, color: palette(context).muted),
                           onPressed: () => showTaskMenu(task),
                         ),
                       ),
@@ -236,11 +237,11 @@ class _AdminTasksScreenState extends State<AdminTasksScreen> {
                     children: [
                       if (worker != null)
                         Text(worker,
-                            style: const TextStyle(
-                                fontSize: 12, color: Colors.grey)),
+                            style: TextStyle(
+                                fontSize: 12, color: palette(context).muted)),
                       Text('${t.created} ${fmtDate(task['created_at'])}',
-                          style: const TextStyle(
-                              fontSize: 12, color: Colors.grey)),
+                          style: TextStyle(
+                              fontSize: 12, color: palette(context).muted)),
                       if (task['completed_at'] != null)
                         Text('${t.submitted} ${fmtDate(task['completed_at'])}',
                             style: const TextStyle(
@@ -318,6 +319,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   String? apartmentId;
   bool urgent = false;
   bool loading = false;
+  TimeOfDay? scheduledTime;
 
   bool get isEdit => widget.task != null;
 
@@ -331,6 +333,12 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       apartmentId = widget.task!['apartment_id'];
       itemId = widget.task!['item_id'];
       urgent = widget.task!['is_urgent'] ?? false;
+      final rawTime = widget.task!['scheduled_time'] as String?;
+      if (rawTime != null) {
+        final parts = rawTime.split(':');
+        scheduledTime = TimeOfDay(
+            hour: int.parse(parts[0]), minute: int.parse(parts[1]));
+      }
     } else {
       apartmentId = widget.presetApartmentId;
       if (widget.presetTitle != null) title.text = widget.presetTitle!;
@@ -369,6 +377,9 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
         'assigned_to': workerId,
         'item_id': itemId,
         'is_urgent': urgent,
+        'scheduled_time': scheduledTime == null
+            ? null
+            : '${scheduledTime!.hour.toString().padLeft(2, '0')}:${scheduledTime!.minute.toString().padLeft(2, '0')}:00',
       };
 
       if (isEdit) {
@@ -496,6 +507,27 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
               ],
               onChanged: (v) => setState(() => itemId = v),
             ),
+            const SizedBox(height: 8),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text(t.scheduledTime),
+              subtitle: Text(scheduledTime == null
+                  ? t.noTimeGroup
+                  : scheduledTime!.format(context)),
+              trailing: scheduledTime == null
+                  ? const Icon(Icons.schedule_outlined, color: kAccent)
+                  : IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: () => setState(() => scheduledTime = null),
+                    ),
+              onTap: () async {
+                final picked = await showTimePicker(
+                  context: context,
+                  initialTime: scheduledTime ?? TimeOfDay.now(),
+                );
+                if (picked != null) setState(() => scheduledTime = picked);
+              },
+            ),
             SwitchListTile(
               title: Text(t.urgent),
               value: urgent,
@@ -603,7 +635,7 @@ class _ReviewTaskScreenState extends State<ReviewTaskScreen> {
               Container(
                 height: 260,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFE6E1D6),
+                  color: palette(context).line,
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: const Center(child: CircularProgressIndicator()),

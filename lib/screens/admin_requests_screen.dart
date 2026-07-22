@@ -5,9 +5,10 @@ import '../l10n/app_localizations.dart';
 import '../icons.dart';
 import '../locale_provider.dart';
 import '../i18n_text.dart';
+import '../theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'admin_tasks_screen.dart'
-    show kAccent, kAccentSoft, kAmber, kAmberSoft, kBlue, kBlueSoft, kLine, NewTaskScreen;
+    show kAccent, kAccentSoft, kAmber, kAmberSoft, kBlue, kBlueSoft, NewTaskScreen;
 
 class AdminRequestsScreen extends StatefulWidget {
   const AdminRequestsScreen({super.key});
@@ -61,7 +62,7 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
           : rows.isEmpty
           ? Center(
           child: Text(t.noRequests,
-              style: const TextStyle(color: Colors.grey)))
+              style: TextStyle(color: palette(context).muted)))
           : RefreshIndicator(
         onRefresh: load,
         child: ListView.builder(
@@ -88,8 +89,8 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
                 margin: const EdgeInsets.only(bottom: 11),
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: kLine),
+                  color: palette(context).card,
+                  border: Border.all(color: palette(context).line),
                   borderRadius: BorderRadius.circular(18),
                 ),
                 child: Column(
@@ -121,10 +122,10 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
                                   fontWeight: FontWeight.w600)),
                         ),
                         if (r['photo_url'] != null)
-                          const Padding(
-                            padding: EdgeInsets.only(right: 6),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 6),
                             child: Icon(Icons.photo_camera_outlined,
-                                size: 16, color: Colors.grey),
+                                size: 16, color: palette(context).muted),
                           ),
                         Container(
                           padding: const EdgeInsets.symmetric(
@@ -145,8 +146,8 @@ class _AdminRequestsScreenState extends State<AdminRequestsScreen> {
                       spacing: 8,
                       children: [
                         Text(fmt(r['created_at']),
-                            style: const TextStyle(
-                                fontSize: 12, color: Colors.grey)),
+                            style: TextStyle(
+                                fontSize: 12, color: palette(context).muted)),
                         if (r['tasks'] != null)
                           Text('→ ${r['tasks']['title']}',
                               style: const TextStyle(
@@ -250,7 +251,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
     final t = AppLocalizations.of(context)!;
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: palette(context).card,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -331,7 +332,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
           if (description.isNotEmpty) ...[
             const SizedBox(height: 8),
             Text(description,
-                style: const TextStyle(color: Colors.grey)),
+                style: TextStyle(color: palette(context).muted)),
           ],
           if (canToggle) ...[
             const SizedBox(height: 8),

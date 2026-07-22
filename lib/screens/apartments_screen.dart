@@ -4,7 +4,8 @@ import 'package:flutter/services.dart';
 import '../main.dart';
 import 'tenant_card.dart';
 import '../l10n/app_localizations.dart';
-import 'admin_tasks_screen.dart' show kAccent, kAccentSoft, kAmber, kAmberSoft, kLine;
+import '../theme.dart';
+import 'admin_tasks_screen.dart' show kAccent, kAccentSoft, kAmber, kAmberSoft;
 
 /// Генератор пароля: Kv38-7f2a
 String genPassword(String aptNumber) {
@@ -91,9 +92,9 @@ class _ApartmentsScreenState extends State<ApartmentsScreen> {
               onTap: () => openApartment(apt),
               child: Container(
                 decoration: BoxDecoration(
-                  color: hasTenant ? kAccent : Colors.white,
+                  color: hasTenant ? kAccent : palette(context).card,
                   border: Border.all(
-                      color: hasTenant ? kAccent : kLine),
+                      color: hasTenant ? kAccent : palette(context).line),
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Column(
@@ -105,7 +106,7 @@ class _ApartmentsScreenState extends State<ApartmentsScreen> {
                             fontWeight: FontWeight.bold,
                             color: hasTenant
                                 ? Colors.white
-                                : Colors.grey.shade700)),
+                                : null)),
                     const SizedBox(height: 3),
                     Text(
                       hasTenant
@@ -115,7 +116,7 @@ class _ApartmentsScreenState extends State<ApartmentsScreen> {
                           fontSize: 10.5,
                           color: hasTenant
                               ? Colors.white70
-                              : Colors.grey),
+                              : palette(context).muted),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ],
@@ -133,7 +134,7 @@ class _ApartmentsScreenState extends State<ApartmentsScreen> {
     final hasTenant = apt['tenant_id'] != null;
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: palette(context).card,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -202,8 +203,8 @@ class _ApartmentsScreenState extends State<ApartmentsScreen> {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.person_remove_outlined,
-                    color: Colors.grey),
+                leading: Icon(Icons.person_remove_outlined,
+                    color: palette(context).muted),
                 title: Text(t.delete),
                 onTap: () async {
                   Navigator.pop(context);
@@ -374,7 +375,7 @@ class _AddTenantDialogState extends State<AddTenantDialog> {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(label,
-          style: const TextStyle(fontSize: 11, color: Colors.grey)),
+          style: TextStyle(fontSize: 11, color: palette(context).muted)),
       const SizedBox(height: 4),
       GestureDetector(
         onTap: () {

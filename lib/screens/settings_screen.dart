@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
 import '../locale_provider.dart';
+import '../theme_provider.dart';
+import '../theme.dart';
 import '../notifications.dart';
 import '../l10n/app_localizations.dart';
 import 'contractors_screen.dart';
 import 'purchase_screen.dart';
 import 'stock_log_screen.dart';
 import 'admin_tasks_screen.dart'
-    show kAccent, kAccentSoft, kRed, kRedSoft, kLine;
+    show kAccent, kAccentSoft, kRed, kRedSoft;
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -100,8 +102,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       const SizedBox(height: 2),
                       Text(
                         supabase.auth.currentUser?.email ?? '',
-                        style: const TextStyle(
-                            fontSize: 12, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: 12, color: palette(context).muted),
                       ),
                     ],
                   ),
@@ -127,6 +129,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
 
+          // Тема
+          _section(t.theme),
+          Container(
+            padding: const EdgeInsets.all(14),
+            decoration: _cardDeco(),
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                _theme(t.systemTheme, ThemeMode.system),
+                _theme(t.lightTheme, ThemeMode.light),
+                _theme(t.darkTheme, ThemeMode.dark),
+              ],
+            ),
+          ),
+
           // Настройки дома — только админ
           if (isAdmin) ...[
             _section(t.buildingSettings),
@@ -148,14 +166,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       if (ok == true) load();
                     },
                   ),
-                  const Divider(height: 1, color: kLine),
+                  Divider(height: 1, color: palette(context).line),
                   _tile(
                     Icons.apartment_outlined,
                     t.structure,
                     '${building?['entrances'] ?? 0} · ${building?['floors'] ?? 0}',
                     null,
                   ),
-                  const Divider(height: 1, color: kLine),
+                  Divider(height: 1, color: palette(context).line),
                   _tile(
                     Icons.engineering_outlined,
                     t.contractors,
@@ -165,7 +183,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           builder: (_) => const ContractorsScreen()),
                     ),
                   ),
-                  const Divider(height: 1, color: kLine),
+                  Divider(height: 1, color: palette(context).line),
                   _tile(
                     Icons.receipt_long_outlined,
                     t.stockLog,
@@ -175,7 +193,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           builder: (_) => const StockLogScreen()),
                     ),
                   ),
-                  const Divider(height: 1, color: kLine),
+                  Divider(height: 1, color: palette(context).line),
                   _tile(
                     Icons.shopping_cart_outlined,
                     t.purchaseRequests,
@@ -246,19 +264,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   BoxDecoration _cardDeco() => BoxDecoration(
-    color: Colors.white,
-    border: Border.all(color: kLine),
+    color: palette(context).card,
+    border: Border.all(color: palette(context).line),
     borderRadius: BorderRadius.circular(18),
   );
 
   Widget _section(String label) => Padding(
     padding: const EdgeInsets.fromLTRB(4, 20, 4, 10),
     child: Text(label.toUpperCase(),
-        style: const TextStyle(
+        style: TextStyle(
             fontSize: 11,
             letterSpacing: .7,
             fontWeight: FontWeight.bold,
-            color: Colors.grey)),
+            color: palette(context).muted)),
   );
 
   Widget _lang(String label, Locale? locale) {
@@ -272,15 +290,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
         decoration: BoxDecoration(
-          color: selected ? kAccent : Colors.white,
-          border: Border.all(color: selected ? kAccent : kLine),
+          color: selected ? kAccent : palette(context).card,
+          border: Border.all(color: selected ? kAccent : palette(context).line),
           borderRadius: BorderRadius.circular(11),
         ),
         child: Text(label,
             style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
-                color: selected ? Colors.white : Colors.grey.shade600)),
+                color: selected ? Colors.white : palette(context).muted)),
+      ),
+    );
+  }
+
+  Widget _theme(String label, ThemeMode mode) {
+    final selected = themeProvider.mode == mode;
+    return GestureDetector(
+      onTap: () => themeProvider.set(mode),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
+        decoration: BoxDecoration(
+          color: selected ? kAccent : palette(context).card,
+          border: Border.all(color: selected ? kAccent : palette(context).line),
+          borderRadius: BorderRadius.circular(11),
+        ),
+        child: Text(label,
+            style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: selected ? Colors.white : palette(context).muted)),
       ),
     );
   }
@@ -300,9 +338,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             style: const TextStyle(
                 fontSize: 14.5, fontWeight: FontWeight.w600)),
         subtitle: Text(value,
-            style: const TextStyle(fontSize: 12, color: Colors.grey)),
+            style: TextStyle(fontSize: 12, color: palette(context).muted)),
         trailing: onTap != null
-            ? const Icon(Icons.chevron_right, color: Colors.grey)
+            ? Icon(Icons.chevron_right, color: palette(context).muted)
             : null,
         onTap: onTap,
       );

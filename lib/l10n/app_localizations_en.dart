@@ -99,6 +99,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statusRedo => 'Redo';
 
   @override
+  String get statusAssigned => 'Assigned';
+
+  @override
+  String get statusInProgress => 'In progress';
+
+  @override
+  String get assignedTab => 'Assigned';
+
+  @override
+  String get historyTab => 'History';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get noTimeGroup => 'No time';
+
+  @override
+  String get scheduledTime => 'Time';
+
+  @override
   String get noTasks => 'No tasks yet';
 
   @override
@@ -358,6 +379,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get language => 'Language';
+
+  @override
+  String get theme => 'Theme';
+
+  @override
+  String get systemTheme => 'System';
+
+  @override
+  String get lightTheme => 'Light';
+
+  @override
+  String get darkTheme => 'Dark';
 
   @override
   String get profile => 'Profile';

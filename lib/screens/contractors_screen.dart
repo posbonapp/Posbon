@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../main.dart';
 import '../l10n/app_localizations.dart';
-import 'admin_tasks_screen.dart' show kAccent, kAccentSoft, kRed, kLine;
+import '../theme.dart';
+import 'admin_tasks_screen.dart' show kAccent, kAccentSoft, kRed;
 
 class ContractorsScreen extends StatefulWidget {
   const ContractorsScreen({super.key});
@@ -61,7 +62,7 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
           : rows.isEmpty
           ? Center(
           child: Text(t.noContractors,
-              style: const TextStyle(color: Colors.grey)))
+              style: TextStyle(color: palette(context).muted)))
           : RefreshIndicator(
         onRefresh: load,
         child: ListView.builder(
@@ -73,8 +74,8 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
               margin: const EdgeInsets.only(bottom: 11),
               padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: kLine),
+                color: palette(context).card,
+                border: Border.all(color: palette(context).line),
                 borderRadius: BorderRadius.circular(18),
               ),
               child: Row(
@@ -101,14 +102,14 @@ class _ContractorsScreenState extends State<ContractorsScreen> {
                         if ((c['specialty'] ?? '').isNotEmpty) ...[
                           const SizedBox(height: 2),
                           Text(c['specialty'],
-                              style: const TextStyle(
-                                  fontSize: 12, color: Colors.grey)),
+                              style: TextStyle(
+                                  fontSize: 12, color: palette(context).muted)),
                         ],
                         if ((c['phone'] ?? '').isNotEmpty) ...[
                           const SizedBox(height: 2),
                           Text(c['phone'],
-                              style: const TextStyle(
-                                  fontSize: 12, color: Colors.grey)),
+                              style: TextStyle(
+                                  fontSize: 12, color: palette(context).muted)),
                         ],
                       ],
                     ),

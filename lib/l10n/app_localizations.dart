@@ -280,6 +280,48 @@ abstract class AppLocalizations {
   /// **'Redo'**
   String get statusRedo;
 
+  /// No description provided for @statusAssigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned'**
+  String get statusAssigned;
+
+  /// No description provided for @statusInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get statusInProgress;
+
+  /// No description provided for @assignedTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned'**
+  String get assignedTab;
+
+  /// No description provided for @historyTab.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get historyTab;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @noTimeGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'No time'**
+  String get noTimeGroup;
+
+  /// No description provided for @scheduledTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get scheduledTime;
+
   /// No description provided for @noTasks.
   ///
   /// In en, this message translates to:
@@ -795,6 +837,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Language'**
   String get language;
+
+  /// No description provided for @theme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme;
+
+  /// No description provided for @systemTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get systemTheme;
+
+  /// No description provided for @lightTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get lightTheme;
+
+  /// No description provided for @darkTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get darkTheme;
 
   /// No description provided for @profile.
   ///

@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../main.dart';
 import '../l10n/app_localizations.dart';
 import '../notifications.dart';
+import '../theme.dart';
 import 'admin_tasks_screen.dart';
 import 'people_screen.dart';
 import 'stock_screen.dart';
@@ -111,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(titles[index], style: const TextStyle(fontSize: 18)),
             if (building != null)
               Text(building!['name'] ?? '',
-                  style: const TextStyle(fontSize: 11.5, color: Colors.grey)),
+                  style: TextStyle(fontSize: 11.5, color: palette(context).muted)),
           ],
         ),
         backgroundColor: Colors.transparent,

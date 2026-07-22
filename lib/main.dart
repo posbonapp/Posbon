@@ -9,6 +9,8 @@ import 'screens/home_screen.dart';
 import 'screens/worker_home_screen.dart';
 import 'screens/tenant_root_screen.dart';
 import 'locale_provider.dart';
+import 'theme.dart';
+import 'theme_provider.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'notifications.dart';
@@ -23,6 +25,7 @@ Future<void> main() async {
     anonKey: Config.supabaseAnonKey,
   );
   await localeProvider.load();
+  await themeProvider.load();
   runApp(const PosbonApp());
 }
 
@@ -34,41 +37,16 @@ class PosbonApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: localeProvider,
+      animation: Listenable.merge([localeProvider, themeProvider]),
       builder: (context, _) => MaterialApp(
         title: 'Posbon',
         debugShowCheckedModeBanner: false,
         locale: localeProvider.locale,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xFF2F7D6B),
-            brightness: Brightness.light,
-          ),
-          scaffoldBackgroundColor: const Color(0xFFF4F1EA),
-          useMaterial3: true,
-          inputDecorationTheme: InputDecorationTheme(
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Color(0xFFE6E1D6)),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Color(0xFFE6E1D6)),
-            ),
-          ),
-          filledButtonTheme: FilledButtonThemeData(
-            style: FilledButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-          ),
-        ),
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        themeMode: themeProvider.mode,
         home: const AuthGate(),
       ),
     );

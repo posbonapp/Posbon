@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../main.dart';
 import '../l10n/app_localizations.dart';
+import '../theme.dart';
 
 class SetupBuildingScreen extends StatefulWidget {
   const SetupBuildingScreen({super.key});
@@ -76,9 +77,9 @@ class _SetupBuildingScreenState extends State<SetupBuildingScreen> {
               style: const TextStyle(fontWeight: FontWeight.w600))),
           Container(
             decoration: BoxDecoration(
-              border: Border.all(color: const Color(0xFFE6E1D6)),
+              border: Border.all(color: palette(context).line),
               borderRadius: BorderRadius.circular(12),
-              color: Colors.white,
+              color: palette(context).card,
             ),
             child: Row(
               children: [

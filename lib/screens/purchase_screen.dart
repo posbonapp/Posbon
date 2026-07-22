@@ -3,8 +3,9 @@ import 'package:intl/intl.dart';
 import '../main.dart';
 import '../l10n/app_localizations.dart';
 import '../icons.dart';
+import '../theme.dart';
 import 'admin_tasks_screen.dart'
-    show kAccent, kAccentSoft, kAmber, kAmberSoft, kRed, kRedSoft, kBlue, kBlueSoft, kLine;
+    show kAccent, kAccentSoft, kAmber, kAmberSoft, kRed, kRedSoft, kBlue, kBlueSoft;
 
 class PurchaseScreen extends StatefulWidget {
   final bool isAdmin;
@@ -82,7 +83,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
           : rows.isEmpty
           ? Center(
           child: Text(t.noPurchases,
-              style: const TextStyle(color: Colors.grey)))
+              style: TextStyle(color: palette(context).muted)))
           : RefreshIndicator(
         onRefresh: load,
         child: ListView.builder(
@@ -111,8 +112,8 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                 margin: const EdgeInsets.only(bottom: 11),
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: kLine),
+                  color: palette(context).card,
+                  border: Border.all(color: palette(context).line),
                   borderRadius: BorderRadius.circular(18),
                 ),
                 child: Row(
@@ -140,8 +141,8 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                           ),
                           const SizedBox(height: 3),
                           Text(fmt(p['created_at']),
-                              style: const TextStyle(
-                                  fontSize: 12, color: Colors.grey)),
+                              style: TextStyle(
+                                  fontSize: 12, color: palette(context).muted)),
                         ],
                       ),
                     ),
@@ -235,7 +236,7 @@ class _PurchaseDetailScreenState extends State<PurchaseDetailScreen> {
           : items.isEmpty
           ? Center(
           child: Text(t.addFirst,
-              style: const TextStyle(color: Colors.grey)))
+              style: TextStyle(color: palette(context).muted)))
           : ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: items.length,
@@ -256,8 +257,8 @@ class _PurchaseDetailScreenState extends State<PurchaseDetailScreen> {
             margin: const EdgeInsets.only(bottom: 11),
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: kLine),
+              color: palette(context).card,
+              border: Border.all(color: palette(context).line),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Column(
@@ -277,8 +278,8 @@ class _PurchaseDetailScreenState extends State<PurchaseDetailScreen> {
                     ),
                     GestureDetector(
                       onTap: () => deleteItem(it['id']),
-                      child: const Icon(Icons.close,
-                          size: 18, color: Colors.grey),
+                      child: Icon(Icons.close,
+                          size: 18, color: palette(context).muted),
                     ),
                   ],
                 ),
@@ -375,15 +376,15 @@ class _PurchaseDetailScreenState extends State<PurchaseDetailScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
         decoration: BoxDecoration(
-          color: selected ? color : Colors.white,
-          border: Border.all(color: selected ? color : kLine),
+          color: selected ? color : palette(context).card,
+          border: Border.all(color: selected ? color : palette(context).line),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Text(label,
             style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: selected ? Colors.white : Colors.grey.shade600)),
+                color: selected ? Colors.white : palette(context).muted)),
       ),
     );
   }

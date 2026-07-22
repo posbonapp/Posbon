@@ -99,6 +99,27 @@ class AppLocalizationsFr extends AppLocalizations {
   String get statusRedo => 'À refaire';
 
   @override
+  String get statusAssigned => 'Assignée';
+
+  @override
+  String get statusInProgress => 'En cours';
+
+  @override
+  String get assignedTab => 'Assignées';
+
+  @override
+  String get historyTab => 'Historique';
+
+  @override
+  String get today => 'Aujourd\'hui';
+
+  @override
+  String get noTimeGroup => 'Sans horaire';
+
+  @override
+  String get scheduledTime => 'Heure';
+
+  @override
   String get noTasks => 'Aucune tâche';
 
   @override
@@ -358,6 +379,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get language => 'Langue';
+
+  @override
+  String get theme => 'Thème';
+
+  @override
+  String get systemTheme => 'Système';
+
+  @override
+  String get lightTheme => 'Clair';
+
+  @override
+  String get darkTheme => 'Sombre';
 
   @override
   String get profile => 'Profil';

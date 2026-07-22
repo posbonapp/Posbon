@@ -99,6 +99,27 @@ class AppLocalizationsRu extends AppLocalizations {
   String get statusRedo => 'Переделать';
 
   @override
+  String get statusAssigned => 'Назначена';
+
+  @override
+  String get statusInProgress => 'В работе';
+
+  @override
+  String get assignedTab => 'Назначенные';
+
+  @override
+  String get historyTab => 'История';
+
+  @override
+  String get today => 'Сегодня';
+
+  @override
+  String get noTimeGroup => 'Без времени';
+
+  @override
+  String get scheduledTime => 'Время';
+
+  @override
   String get noTasks => 'Задач пока нет';
 
   @override
@@ -358,6 +379,18 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get language => 'Язык';
+
+  @override
+  String get theme => 'Тема';
+
+  @override
+  String get systemTheme => 'Системная';
+
+  @override
+  String get lightTheme => 'Светлая';
+
+  @override
+  String get darkTheme => 'Тёмная';
 
   @override
   String get profile => 'Профиль';

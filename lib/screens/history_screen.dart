@@ -3,7 +3,8 @@ import 'package:intl/intl.dart';
 import '../main.dart';
 import '../l10n/app_localizations.dart';
 import '../icons.dart';
-import 'admin_tasks_screen.dart' show kAccent, kAccentSoft, kLine;
+import '../theme.dart';
+import 'admin_tasks_screen.dart' show kAccent, kAccentSoft;
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -70,10 +71,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
               decoration: InputDecoration(
                 labelText: t.apartment,
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: palette(context).card,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: kLine),
+                  borderSide: BorderSide(color: palette(context).line),
                 ),
               ),
               items: [
@@ -94,7 +95,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 : rows.isEmpty
                 ? Center(
                 child: Text(t.noHistory,
-                    style: const TextStyle(color: Colors.grey)))
+                    style: TextStyle(color: palette(context).muted)))
                 : RefreshIndicator(
               onRefresh: load,
               child: ListView.builder(
@@ -109,8 +110,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     margin: const EdgeInsets.only(bottom: 11),
                     padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: kLine),
+                      color: palette(context).card,
+                      border: Border.all(color: palette(context).line),
                       borderRadius: BorderRadius.circular(18),
                     ),
                     child: Row(
@@ -144,8 +145,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 worker != null
                                     ? '${t.installedBy} $worker · ${fmt(r['installed_at'])}'
                                     : fmt(r['installed_at']),
-                                style: const TextStyle(
-                                    fontSize: 12, color: Colors.grey),
+                                style: TextStyle(
+                                    fontSize: 12, color: palette(context).muted),
                               ),
                             ],
                           ),

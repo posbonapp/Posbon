@@ -8,9 +8,10 @@ import '../l10n/app_localizations.dart';
 import '../icons.dart';
 import '../locale_provider.dart';
 import '../i18n_text.dart';
+import '../theme.dart';
 import 'settings_screen.dart';
 import 'admin_tasks_screen.dart'
-    show kAccent, kAccentSoft, kAmber, kAmberSoft, kBlue, kBlueSoft, kLine;
+    show kAccent, kAccentSoft, kAmber, kAmberSoft, kBlue, kBlueSoft;
 
 class TenantHomeScreen extends StatefulWidget {
   const TenantHomeScreen({super.key});
@@ -95,7 +96,7 @@ class _TenantHomeScreenState extends State<TenantHomeScreen> {
             Text('${t.apartment} ${apartment?['number'] ?? ''}',
                 style: const TextStyle(fontSize: 18)),
             Text(building?['address'] ?? '',
-                style: const TextStyle(fontSize: 11.5, color: Colors.grey)),
+                style: TextStyle(fontSize: 11.5, color: palette(context).muted)),
           ],
         ),
         backgroundColor: Colors.transparent,
@@ -143,7 +144,7 @@ class _TenantHomeScreenState extends State<TenantHomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Text(t.noRequests,
-                    style: const TextStyle(color: Colors.grey)),
+                    style: TextStyle(color: palette(context).muted)),
               ),
             ...requests.map((r) => _requestCard(r, t)),
 
@@ -152,7 +153,7 @@ class _TenantHomeScreenState extends State<TenantHomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Text(t.noHistory,
-                    style: const TextStyle(color: Colors.grey)),
+                    style: TextStyle(color: palette(context).muted)),
               ),
             ...history.map((h) => _historyCard(h, t)),
             const SizedBox(height: 80),
@@ -178,11 +179,11 @@ class _TenantHomeScreenState extends State<TenantHomeScreen> {
   Widget _section(String label) => Padding(
     padding: const EdgeInsets.fromLTRB(4, 22, 4, 10),
     child: Text(label.toUpperCase(),
-        style: const TextStyle(
+        style: TextStyle(
             fontSize: 11,
             letterSpacing: .7,
             fontWeight: FontWeight.bold,
-            color: Colors.grey)),
+            color: palette(context).muted)),
   );
 
   Widget _requestCard(Map<String, dynamic> r, AppLocalizations t) {
@@ -196,8 +197,8 @@ class _TenantHomeScreenState extends State<TenantHomeScreen> {
       margin: const EdgeInsets.only(bottom: 11),
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: kLine),
+        color: palette(context).card,
+        border: Border.all(color: palette(context).line),
         borderRadius: BorderRadius.circular(18),
       ),
       child: Column(
@@ -227,7 +228,7 @@ class _TenantHomeScreenState extends State<TenantHomeScreen> {
           ),
           const SizedBox(height: 6),
           Text(fmt(r['created_at']),
-              style: const TextStyle(fontSize: 12, color: Colors.grey)),
+              style: TextStyle(fontSize: 12, color: palette(context).muted)),
           if (status == 'done' && r['rating'] == null) ...[
             const SizedBox(height: 10),
             Row(
@@ -273,8 +274,8 @@ class _TenantHomeScreenState extends State<TenantHomeScreen> {
       margin: const EdgeInsets.only(bottom: 11),
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: kLine),
+        color: palette(context).card,
+        border: Border.all(color: palette(context).line),
         borderRadius: BorderRadius.circular(18),
       ),
       child: Row(
@@ -301,7 +302,7 @@ class _TenantHomeScreenState extends State<TenantHomeScreen> {
                   worker != null
                       ? '${t.installedBy} $worker · ${fmt(h['installed_at'])}'
                       : fmt(h['installed_at']),
-                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  style: TextStyle(fontSize: 12, color: palette(context).muted),
                 ),
               ],
             ),

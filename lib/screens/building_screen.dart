@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import 'apartments_screen.dart';
 import 'parking_screen.dart';
-import 'admin_tasks_screen.dart' show kAccent, kLine;
+import '../theme.dart';
+import 'admin_tasks_screen.dart' show kAccent;
 
 class BuildingScreen extends StatefulWidget {
   const BuildingScreen({super.key});
@@ -23,7 +24,7 @@ class _BuildingScreenState extends State<BuildingScreen> {
           child: Container(
             padding: const EdgeInsets.all(4),
             decoration: BoxDecoration(
-              color: const Color(0xFFE6E1D6),
+              color: palette(context).line,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(
@@ -53,7 +54,7 @@ class _BuildingScreenState extends State<BuildingScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 9),
         decoration: BoxDecoration(
-          color: tab == i ? Colors.white : Colors.transparent,
+          color: tab == i ? palette(context).card : Colors.transparent,
           borderRadius: BorderRadius.circular(9),
           boxShadow: tab == i
               ? [
@@ -68,7 +69,7 @@ class _BuildingScreenState extends State<BuildingScreen> {
               style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: tab == i ? kAccent : Colors.grey.shade600)),
+                  color: tab == i ? kAccent : palette(context).muted)),
         ),
       ),
     ),

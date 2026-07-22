@@ -3,8 +3,9 @@ import 'package:intl/intl.dart';
 import '../main.dart';
 import '../l10n/app_localizations.dart';
 import '../icons.dart';
+import '../theme.dart';
 import 'admin_tasks_screen.dart'
-    show kAccent, kAccentSoft, kAmber, kAmberSoft, kBlue, kBlueSoft, kLine;
+    show kAccent, kAccentSoft, kAmber, kAmberSoft, kBlue, kBlueSoft;
 
 class StockLogScreen extends StatefulWidget {
   const StockLogScreen({super.key});
@@ -63,7 +64,7 @@ class _StockLogScreenState extends State<StockLogScreen> {
           : rows.isEmpty
           ? Center(
           child: Text(t.noStockLog,
-              style: const TextStyle(color: Colors.grey)))
+              style: TextStyle(color: palette(context).muted)))
           : RefreshIndicator(
         onRefresh: load,
         child: ListView.builder(
@@ -86,8 +87,8 @@ class _StockLogScreenState extends State<StockLogScreen> {
               margin: const EdgeInsets.only(bottom: 10),
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: kLine),
+                color: palette(context).card,
+                border: Border.all(color: palette(context).line),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Row(
@@ -116,8 +117,8 @@ class _StockLogScreenState extends State<StockLogScreen> {
                           by != null
                               ? '$label · $by · ${fmt(r['created_at'])}'
                               : '$label · ${fmt(r['created_at'])}',
-                          style: const TextStyle(
-                              fontSize: 12, color: Colors.grey),
+                          style: TextStyle(
+                              fontSize: 12, color: palette(context).muted),
                         ),
                       ],
                     ),
